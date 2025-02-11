@@ -1,9 +1,18 @@
 /** Database for lunchly */
 
-const pg = require("pg");
+const { Client } = require("pg");
+const dotenv = require("dotenv");
+let DB_URI;
 
-const db = new pg.Client("postgresql:///lunchly");
+dotenv.config();
 
-db.connect();
 
-module.exports = db;
+DB_URI = `postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@localhost/lunchly`;
+
+
+let client = new Client({ 
+    connectionString: DB_URI,
+});
+
+client.connect();
+module.exports = client;
